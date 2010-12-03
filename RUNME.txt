@@ -1,0 +1,15 @@
+HOW TO RUN
+# cd to stomp_server directory
+
+start the server
+$ bin/stompserver  -f=20 -t=20
+
+above the optional 'f' and 't' flags specify checking all queues every f seconds
+for messages older than t seconds, which are removed from the queue.
+Default vaules are 10 seconds for each. 
+
+to run tests, first start the server (without t or f flags. changing
+these might cause some tests to fail)
+ex.
+$ ruby tests/test_timeouts.rb
+

@@ -33,8 +33,8 @@ module StompServer
         :logfile => 'stompserver.log',
         :pidfile => 'stompserver.pid',
         :checkpoint => 0,
-        :timeout => 60,
-        :timeout_check_freq => 30
+        :timeout => 10,
+        :timeout_check_freq => 10
       }
       @opts = getopts
       if opts[:debug]

@@ -2,6 +2,8 @@ stompserver
     by Patrick Hurley, Lionel Bouton
     http://stompserver.rubyforge.org/
 
+    edits by Tyler Green
+
 == DESCRIPTION:
 
 Stomp messaging server with file/dbm/memory/activerecord based FIFO
@@ -16,6 +18,11 @@ Handles basic message queue processing
 * EventMachine
 
 == FEATURES/PROBLEMS:
+
+== Message timeouts
+
+Queues are checked periodically for messages that are older than
+a specified timeout value.
 
 === Several queue storage backends
 

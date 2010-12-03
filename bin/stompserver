@@ -1,3 +1,5 @@
+$:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+
 require 'rubygems'
 require 'etc'
 require 'yaml'
@@ -12,7 +14,6 @@ if $HTTP_ENABLE
   require 'mongrel'
   require 'stomp_server/protocols/http'
 end
-
 
 EventMachine::run do
 
