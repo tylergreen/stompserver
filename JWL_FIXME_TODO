@@ -1,0 +1,45 @@
+In addition to the TODO's I've added inline, the following things also need to be addressed:
+  * Use log4r (or something) to do logging.  I need to migrate off of "puts" asap.
+  * the @pending var in queue_manager is a hash (key connection, value frames) that stores what messages
+    the connection still hasn't ACKed.  Rename this, and expand it so we can actually do transactions.
+  * 
+  * Because of the way the internal algs work, we only have to pull messages out of the 
+    per-connection-queue on ACK.  The only way it could have an element in it's per-connection-queue is 
+    because someone tried to write to it, but it had a message pending.
+    
+
+
+Note:  The general algorithm is this:
+  when someone sends a message:
+    Can someone accept it?  If so, send it to them.
+    else: queue it up.
+
+  when someone acks a message:
+    Do we have any pending messages?  If so, send it to them.
+
+
+Notes for adding configurable broadcast + monitoring queues:
+Create config yaml a la:
+seperator: '.'
+queues:
+  monitor: topic.monitor
+  broadcast: topic.monitor
+queues:
+  monitor: 
+    topic.monitor: topic.foo> 
+  broadcast: 
+    - topic.*.foo
+    - topic.bar.>
+ queues:
+  monitor: 
+    topic.monitor: topic.foo> 
+  broadcast:  #This broadcast syntax is because I might come up with config options
+    'topic.*.foo': true
+    'topic.bar.>': true
+
+
+You can get a message queue when: 
+  when a different party calls sendmsg
+  when you ack <- not sure how to choose which is next message, broadcastqueue, or qstore
+  when you subscribe <- doesn't affect us, unless we allow "presubscribed" users, which we don't
+

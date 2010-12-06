@@ -8,6 +8,7 @@ class Queue
     @stompid = StompServer::StompId.new
     @delete_empty = delete_empty
     @directory = directory
+    @checkpoint_interval=0
     Dir.mkdir(@directory) unless File.directory?(@directory)
     if File.exists?("#{@directory}/qinfo")
       qinfo = Hash.new
@@ -121,6 +122,9 @@ class Queue
     return true
   end
 
+#  JWLTODO Tyler needs this
+#  def peek(dest)
+#  end
   def dequeue(dest)
     return false unless message_for?(dest)
     msgid = @queues[dest][:frames].shift

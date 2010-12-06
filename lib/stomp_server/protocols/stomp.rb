@@ -4,11 +4,27 @@ module StompServer::Protocols
 VALID_COMMANDS = [:connect, :send, :subscribe, :unsubscribe, :begin, :commit, :abort, :ack, :disconnect]
 
 class Stomp < EventMachine::Connection
+  # JWLTODO
+  # Need to add an interal queue of broadcast messages queued for this connection 
+  # -- JWL 2010/11/20
 
   def initialize *args
     super
   end
-
+#  def ack msgid
+#  end
+#  def unacked?
+#    !!self.stomp_state.unacked
+#  end
+#  def unacked= x
+#    self.stomp_state.unacked=x
+#  end
+#  def unacked 
+#    self.stomp_state.unacked
+#  end
+#  def stomp_state
+#    @stomp_state||=UserStompState.new
+#  end
   def post_init
     @sfr = StompServer::StompFrameRecognizer.new
     @transactions = {}
