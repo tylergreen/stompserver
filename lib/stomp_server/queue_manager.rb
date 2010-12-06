@@ -215,7 +215,7 @@ class QueueManager
   # check queues for stale messages older than a timeout
   def clean_queues
     @qstore.destinations.each do |dest| 
-      @qstore.popwhile(dest) { |frame| timed_out? frame  }
+      @qstore.popwhile(dest) { |frame| timed_out? frame }
     end
   end
 

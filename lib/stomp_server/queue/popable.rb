@@ -5,6 +5,5 @@ module Popable
       frame = self.dequeue dest
     end
     self.requeue(dest, frame) if frame
-    self
   end
 end
