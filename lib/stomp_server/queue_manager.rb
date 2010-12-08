@@ -65,7 +65,7 @@ class QueueManager
 
   def initialize(qstore, opts={})
     @qstore = qstore
-    @queues = Hash.new 
+    @queues = Hash.new  { Array.new } 
     @pending = Hash.new
     @timeout = opts[:timeout] || 60
     @timeout_check_freq = opts[:timeout_check_freq] || 30
@@ -130,9 +130,7 @@ class QueueManager
 
   def unsubscribe(dest, connection)
     puts "Unsubscribing from #{dest}"
-    @queues.each do |d, queue|
-      queue.delete_if { |qu| qu.connection == connection and d == dest}
-    end
+    @queues[dest].delete_if { |qu| qu.connection == connection }
     @queues.delete(dest) if @queues[dest].empty?
     puts "deleting #{dest}"
   end
@@ -173,7 +171,6 @@ class QueueManager
       queue.delete_if { |qu| qu.connection == connection }
       @queues.delete(dest) if queue.empty?
     end
-    # @queues.disconnect(user)
   end
 
   def send_to_user(frame, user)
